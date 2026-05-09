@@ -10,7 +10,6 @@ ventana.title("Practica 10")
 var1=tk.BooleanVar()
 var2=tk.BooleanVar()
 var3=tk.IntVar()
-textoEtiqueta=""
 
 #Labels superiores 
 
@@ -93,15 +92,17 @@ tk.Label(ventana, text="Tipo de calculo").place(x=20, y=150)
 tk.Label(ventana, text="Resultado").place(x=150, y=150)
 
 #Caja de texto para mostrar el resultado
-resultado = tk.Entry(ventana, width=20, state="readonly")
-resultado.place(x=150, y=180)
+resultado1 = tk.Entry(ventana, width=20, state="readonly")
+resultado1.place(x=150, y=180)
+resultado2 = tk.Entry(ventana, width=20, state="readonly")
+resultado2.place(x=150, y=210)
 
 def calcular_area():    
     opcionSel = var3.get()
     area = 0
     try:
-        resultado.config(state="normal") # CORRECCIÓN AQUÍ
-        resultado.delete(0, END)
+        resultado1.config(state="normal") # CORRECCIÓN AQUÍ
+        resultado1.delete(0, END)
         if opcionSel == 1:
             lado = float(lado_cuadrado.get())
             area = lado ** 2
@@ -117,8 +118,8 @@ def calcular_area():
             radio = float(radio_circulo.get())
             area = 3.14159 * radio ** 2
         
-        resultado.insert(0, f"Área: {area}")
-        resultado.config(state="readonly") # VOLVEMOS A BLOQUEAR
+        resultado1.insert(0, f"Área: {area}")
+        resultado1.config(state="readonly") # VOLVEMOS A BLOQUEAR
     except ValueError:
         messagebox.showerror(message="Por favor, ingresa valores numéricos válidos.")
         return None
@@ -126,8 +127,8 @@ def calcular_area():
 
 def calcular_perimetro():
     try:
-        resultado.config(state="normal") # CORRECCIÓN AQUÍ
-        resultado.delete(0, END)
+        resultado2.config(state="normal") # CORRECCIÓN AQUÍ
+        resultado2.delete(0, END)
         perimetro = 0
         opcionSel = var3.get()
         if opcionSel == 1:
@@ -145,33 +146,55 @@ def calcular_perimetro():
             radio = float(radio_circulo.get())
             perimetro = 2 * 3.14159 * radio
             
-        resultado.insert(0, f"Perímetro: {perimetro}")
-        resultado.config(state="readonly") # VOLVEMOS A BLOQUEAR
+        resultado2.insert(0, f"Perímetro: {perimetro}")
+        resultado2.config(state="readonly") 
     except ValueError:
         messagebox.showerror(message="Por favor, ingresa valores numéricos válidos.")
         return None
 
+#Funcion para seleccionar la operacion a realizar
+
+#crear los checks
+check1 = tk.Checkbutton(ventana, text="Area", variable=var1, command=lambda: operacion_select())
+check1.place(x=20, y=180)
+
+check2 = tk.Checkbutton(ventana, text="Perimetro", variable=var2, command=lambda: operacion_select())
+check2.place(x=20, y=210)
+
 def operacion_select():
-    try:
          if var1.get()==True:
             calcular_area()
          elif var2.get()==True:
             calcular_perimetro()
-    except Exception as e:
-        messagebox.showerror(message=f"Elige un tipo de calculo: {str(e)}")
-        return None
+         else: 
+            messagebox.showerror(message=f"Elige un tipo de calculo")
 
-#crear los checks
-check1 = tk.Checkbutton(ventana, text="Area", variable=var1, command=operacion_select)
-check1.place(x=20, y=180)
-check2 = tk.Checkbutton(ventana, text="Perimetro", variable=var2, command=operacion_select)
-check2.place(x=20, y=210)
 
+
+    
 #Boton para calcular
 tk.Button(ventana, text="Calcular", command=operacion_select).place(x=150, y=90)
 
+
+#Funcion para limpiar los campos de texto
+def limpiar():
+    resultado1.config(state="normal")
+    resultado2.config(state="normal")
+    resultado1.delete(0, END)
+    resultado2.delete(0, END)
+    resultado1.config(state="readonly")
+    resultado2.config(state="readonly")
+    lado_cuadrado.delete(0, END)
+    base_rectangulo.delete(0, END)
+    altura_rectangulo.delete(0, END)
+    base_triangulo.delete(0, END)
+    altura_triangulo.delete(0, END)
+    radio_circulo.delete(0, END)
+    var1.set(False)
+    var2.set(False)
+    var3.set(0)
 #Boton para limpiar
 
-tk.Button(ventana, text="Limpiar").place(x=240, y=90)
+tk.Button(ventana, text="Limpiar", command=limpiar).place(x=240, y=90)
 
 ventana.mainloop()

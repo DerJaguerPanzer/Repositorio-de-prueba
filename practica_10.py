@@ -171,7 +171,6 @@ def operacion_select():
 
 
 
-    
 #Boton para calcular
 tk.Button(ventana, text="Calcular", command=operacion_select).place(x=150, y=90)
 

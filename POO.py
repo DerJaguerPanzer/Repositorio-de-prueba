@@ -1,8 +1,10 @@
 class Coche():
-    largochasis = 250
-    anchocasis = 120
-    ruedas = 4
-    enmarcha = False
+    
+    def __init__(self): #Constructor
+        self.__largochasis = 250
+        self.__anchocasis = 120
+        self.__ruedas = 4
+        self.__enmarcha = False
     
     def arrancar(self, arrancamos): #Metodo
         self.enmarcha = arrancamos

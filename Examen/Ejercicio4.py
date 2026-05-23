@@ -37,11 +37,11 @@ def calculo_IMC(categoria):
 
         if imc < 18.5:
             tipo_categoria = "Bajo Peso"
-        if imc <25:
+        elif imc < 25:
             tipo_categoria = "Normal"
-        if imc <30:
+        elif imc < 30:
             tipo_categoria = "Sobrepeso"
-        if imc >30:
+        elif imc >30:
             tipo_categoria = "Obesidad"
         Etiqueta.config(text= tipo_categoria)
     except:

@@ -14,7 +14,7 @@ Promedio = tk.Entry(ventana, width=20, state= "readonly")
 Promedio.place(x=220, y=40)
 
 #Entry y etiqueta de reporbados 
-tk.Label(ventana, text= "Numero de resultados").place(x=220, y=60)
+tk.Label(ventana, text= "Numero de reprobados").place(x=220, y=60)
 Reprobados = tk.Entry(ventana, width=20, state= "readonly")
 Reprobados.place(x=220, y=80)
 
@@ -62,53 +62,47 @@ def modal():
         entrada_calificacion.delete(0,END)
         entrada_nombre.delete(0,END)
         entrada_nombre.focus()
+
+        #Promedio General
+        Promedio.config(state="normal") 
+        Promedio.delete(0, END) 
+        #Logica
+        sumatoria = sum(lista_calificaciones)
+        promedio_general = sumatoria / len(lista_calificaciones)
+
+        Promedio.insert(0, str(promedio_general)) 
+        Promedio.config(state="readonly")
+
+        #Nota Maxima
+        Maxima.config(state ="normal")
+        Maxima.delete(0,END)
+        #Logica
+        nota_maxima = max(lista_calificaciones)
+
+        Maxima.insert(0, str(nota_maxima))
+        Maxima.config(state = "readonly")
+
+        #Reprobados
+        Reprobados.config(state ="normal")
+        Reprobados.delete(0, END)
+
+        #Logica
+        cantidad_reprobados = 0
+        for i in range(len(lista_calificaciones)):
+            if lista_calificaciones[i] < 60:
+                cantidad_reprobados += 1
+            elif i == len(lista_calificaciones):
+                break 
+            i+=1    
+
+        Reprobados.insert(0, str(cantidad_reprobados))
+        Reprobados.config(state="readonly")
     
     ttk.Button(modal, text="Agregar a la lista", command=insertar_datos).pack(pady=5)
 
-def estadisticas():
-    
-    lista_calificaciones
-    
-    #Promedio General
-    Promedio.config(state="normal") 
-    Promedio.delete(0, END) 
-    #Logica
-    sumatoria = sum(lista_calificaciones)
-    promedio_general = len(lista_calificaciones) / sumatoria
-    
-    Promedio.insert(0, str(promedio_general)) 
-    Promedio.config(state="readonly")
-
-    #Nota Maxima
-    Maxima.config(state = "normal")
-    Maxima.delete(0,END)
-    #Logica
-    nota_maxima = max(lista_calificaciones)
-    
-    Maxima.insert(nota_maxima)
-    Maxima.config(state = "readonly")
-    
-    #Reprobados
-    Reprobados.config(state = "normal")
-    Reprobados.delete(0, END)
-    
-    #Logica
-    cantidad_reprobados = 0
-    for i in range(len(lista_calificaciones)):
-        if lista_calificaciones[i] < 60:
-            cantidad_reprobados += 1
-        elif i == len(lista_calificaciones):
-            break 
-        i+=1 
-         
-    Reprobados.insert(cantidad_reprobados)
-    Reprobados.config(state = "readonly")
-
-    
+       
 #Botones
 
 ttk.Button(ventana, text= "Nuevo Alumno", command=modal).place(x=220, y=150)
-ttk.Button(ventana, text = "Calculo Estadisticas", command = estadisticas). place(x=220, y =180)
-
 
 ventana.mainloop()

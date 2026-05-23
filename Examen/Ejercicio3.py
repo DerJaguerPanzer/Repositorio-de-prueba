@@ -20,7 +20,6 @@ class Biciesto:
         else:
             return False
 
-# 1. Metemos la lógica dentro de una función para que NO se ejecute de inmediato
 def comprobar_año():
     try:
         año_ingresado = int(entrada_año.get()) 
@@ -33,12 +32,9 @@ def comprobar_año():
             messagebox.showinfo("Resultado", f"El año {año_ingresado} NO es bisiesto.")
             
     except ValueError:
-        # Por si el usuario presiona el botón dejando la casilla vacía o escribe letras
         messagebox.showerror("Error", "Por favor, ingresa un número de año válido.")
 
-# 2. Creamos el botón que llamará a la función al hacer clic
 boton_comprobar = ttk.Button(ventana, text="Verificar", command=comprobar_año)
 boton_comprobar.pack(pady=15)
 
-# 3. Mantenemos la ventana abierta esperando las acciones del usuario
 ventana.mainloop()
